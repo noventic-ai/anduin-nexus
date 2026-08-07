@@ -1,0 +1,11 @@
+adapter:
+  name: chembl
+  operation: search_molecules
+
+params:
+  query: trametinib
+  limit: 25
+
+output:
+  pretty: true
+  path: assets/chembl_trametinib_molecule_search.json

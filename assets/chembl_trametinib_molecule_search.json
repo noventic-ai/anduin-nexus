@@ -1,0 +1,388 @@
+[
+  {
+    "atc_classifications": [
+      "L01EE01"
+    ],
+    "availability_type": 1,
+    "biotherapeutic": null,
+    "black_box_warning": 0,
+    "chemical_probe": 1,
+    "chirality": 2,
+    "cross_references": [],
+    "dosed_ingredient": true,
+    "first_approval": 2013,
+    "first_in_class": 1,
+    "helm_notation": null,
+    "inorganic_flag": 0,
+    "max_phase": "4.0",
+    "molecule_chembl_id": "CHEMBL2103875",
+    "molecule_hierarchy": {
+      "active_chembl_id": "CHEMBL2103875",
+      "molecule_chembl_id": "CHEMBL2103875",
+      "parent_chembl_id": "CHEMBL2103875"
+    },
+    "molecule_properties": {
+      "alogp": "3.94",
+      "aromatic_rings": 4,
+      "full_molformula": "C26H23FIN5O4",
+      "full_mwt": "615.40",
+      "hba": 8,
+      "hbd": 2,
+      "heavy_atoms": 37,
+      "mw_freebase": "615.40",
+      "np_likeness_score": "-1.57",
+      "num_ro5_violations": 1,
+      "psa": "107.13",
+      "qed_weighted": "0.33",
+      "ro3_pass": "N",
+      "rtb": 5
+    },
+    "molecule_structures": {
+      "canonical_smiles": "CC(=O)Nc1cccc(-n2c(=O)n(C3CC3)c(=O)c3c(Nc4ccc(I)cc4F)n(C)c(=O)c(C)c32)c1",
+      "molfile": "\n     RDKit          2D\n\n 37 41  0  0  0  0  0  0  0  0999 V2000\n   -5.8339    3.3000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.1195    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.1195    2.0625    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4050    3.3000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.6905    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9761    3.3000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.6905    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9761    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2616    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2616    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5471    3.3000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8326    4.5375    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5471    4.1250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8326    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1182    3.3000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1182    4.1250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2616    4.5375    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8326    5.3625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.2493    5.9459    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.0743    5.9459    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5963    4.5375    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.8326    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1182    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5963    2.0625    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    0.5963    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.3108    3.3000    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    2.0252    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7397    3.3000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.0252    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7397    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.4542    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.4542    2.8875    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.1182    0.8250    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    1.3108    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    4.1686    1.6500    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5471    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.7397    4.1250    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  2  0\n  2  4  1  0\n  4  5  1  0\n  6  5  2  0\n  5  7  1  0\n  6 10  1  0\n  7  8  2  0\n  8  9  1  0\n  9 10  2  0\n 10 11  1  0\n 13 11  1  0\n 11 14  1  0\n 12 13  1  0\n 12 16  1  0\n 15 16  1  0\n 13 17  2  0\n 12 18  1  0\n 18 19  1  0\n 19 20  1  0\n 20 18  1  0\n 16 21  2  0\n 15 25  2  0\n 15 14  1  0\n 14 22  2  0\n 22 23  1  0\n 23 24  1  0\n 24 25  1  0\n 25 26  1  0\n 26 27  1  0\n 28 27  2  0\n 27 29  1  0\n 28 32  1  0\n 29 30  2  0\n 30 31  1  0\n 31 32  2  0\n 23 33  2  0\n 24 34  1  0\n 31 35  1  0\n 22 36  1  0\n 28 37  1  0\nM  END\n> <chembl_id>\nCHEMBL2103875\n\n> <chembl_pref_name>\nTRAMETINIB",
+      "standard_inchi": "InChI=1S/C26H23FIN5O4/c1-13-22-21(23(31(3)24(13)35)30-20-10-7-15(28)11-19(20)27)25(36)33(17-8-9-17)26(37)32(22)18-6-4-5-16(12-18)29-14(2)34/h4-7,10-12,17,30H,8-9H2,1-3H3,(H,29,34)",
+      "standard_inchi_key": "LIRYPHYGHXZJBZ-UHFFFAOYSA-N"
+    },
+    "molecule_synonyms": [
+      {
+        "molecule_synonym": "CPD 8B",
+        "syn_type": "PND",
+        "synonyms": "cpd 8b"
+      },
+      {
+        "molecule_synonym": "GSK 1120212",
+        "syn_type": "PND",
+        "synonyms": "GSK 1120212"
+      },
+      {
+        "molecule_synonym": "GSK-1120212",
+        "syn_type": "PND",
+        "synonyms": "GSK-1120212"
+      },
+      {
+        "molecule_synonym": "GSK-1120212",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "GSK-1120212"
+      },
+      {
+        "molecule_synonym": "GSK1120212",
+        "syn_type": "PND",
+        "synonyms": "GSK1120212"
+      },
+      {
+        "molecule_synonym": "GSK1120212",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "GSK1120212"
+      },
+      {
+        "molecule_synonym": "GSK1120212B",
+        "syn_type": "PND",
+        "synonyms": "GSK1120212B"
+      },
+      {
+        "molecule_synonym": "GSK-1120212TRAMETINIBMEKINISTA-1083G1357N-(3-{3-CYCLOPROPYL-5-[(2-FLUORO-4-IODOPHENYL)AMINO]-6,8-DIMETHYL-2,4,7-TRIOXO-3,4,6,7-TETRAHYDROPYRIDO[4,3-D]PYRIMIDIN-1(2H)-YL}PHENYL)ACETAMIDE GENERAL",
+        "syn_type": "PND",
+        "synonyms": "GSK-1120212TrametinibMekinistA-1083G1357N-(3-{3-Cyclopropyl-5-[(2-fluoro-4-iodophenyl)amino]-6,8-dimethyl-2,4,7-trioxo-3,4,6,7-tetrahydropyrido[4,3-d]pyrimidin-1(2H)-yl}phenyl)acetamide GENERAL"
+      },
+      {
+        "molecule_synonym": "JTP 74057",
+        "syn_type": "PND",
+        "synonyms": "JTP 74057"
+      },
+      {
+        "molecule_synonym": "JTP 74057",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "JTP 74057"
+      },
+      {
+        "molecule_synonym": "JTP-74057",
+        "syn_type": "PND",
+        "synonyms": "JTP-74057"
+      },
+      {
+        "molecule_synonym": "JTP-74057",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "JTP-74057"
+      },
+      {
+        "molecule_synonym": "MEKINIST",
+        "syn_type": "PND",
+        "synonyms": "Mekinist"
+      },
+      {
+        "molecule_synonym": "Mekinist",
+        "syn_type": "TRADE_NAME",
+        "synonyms": "MEKINIST"
+      },
+      {
+        "molecule_synonym": "TMT-212",
+        "syn_type": "PND",
+        "synonyms": "TMT-212"
+      },
+      {
+        "molecule_synonym": "TMT-212",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "TMT-212"
+      },
+      {
+        "molecule_synonym": "Tmt212",
+        "syn_type": "OTHER",
+        "synonyms": "TMT212"
+      },
+      {
+        "molecule_synonym": "TMT212",
+        "syn_type": "PND",
+        "synonyms": "TMT212"
+      },
+      {
+        "molecule_synonym": "TMT212",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "TMT212"
+      },
+      {
+        "molecule_synonym": "Trametinib",
+        "syn_type": "ATC",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "Trametinib",
+        "syn_type": "BNF",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "Trametinib",
+        "syn_type": "INN",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "Trametinib",
+        "syn_type": "MERCK_INDEX",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "Trametinib",
+        "syn_type": "OTHER",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "TRAMETINIB",
+        "syn_type": "PND",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "Trametinib",
+        "syn_type": "USAN",
+        "synonyms": "TRAMETINIB"
+      },
+      {
+        "molecule_synonym": "TRAMETINIB DIMETHYL SULFOXIDE",
+        "syn_type": "PND",
+        "synonyms": "Trametinib Dimethyl Sulfoxide"
+      },
+      {
+        "molecule_synonym": "TRAMETINIB (GSK1120212)",
+        "syn_type": "PND",
+        "synonyms": "Trametinib (GSK1120212)"
+      }
+    ],
+    "molecule_type": "Small molecule",
+    "natural_product": 0,
+    "oral": true,
+    "orphan": 1,
+    "parenteral": false,
+    "polymer_flag": 0,
+    "pref_name": "TRAMETINIB",
+    "prodrug": 0,
+    "score": 38.0,
+    "structure_type": "MOL",
+    "therapeutic_flag": true,
+    "topical": false,
+    "usan_stem": "-tinib",
+    "usan_stem_definition": "tyrosine kinase inhibitors: tyrosine kinase inhibitors; MEK (MAPK kinase) inhibitors",
+    "usan_substem": "-tinib (-metinib)",
+    "usan_year": 2011,
+    "veterinary": 0,
+    "withdrawn_flag": false
+  },
+  {
+    "atc_classifications": [],
+    "availability_type": 1,
+    "biotherapeutic": null,
+    "black_box_warning": 0,
+    "chemical_probe": 0,
+    "chirality": 2,
+    "cross_references": [
+      {
+        "xref_id": "human/EPAR/mekinist",
+        "xref_name": "mekinist",
+        "xref_src": "EMA"
+      },
+      {
+        "xref_id": "human/EPAR/spexotras",
+        "xref_name": "spexotras",
+        "xref_src": "EMA"
+      }
+    ],
+    "dosed_ingredient": true,
+    "first_approval": 2013,
+    "first_in_class": 1,
+    "helm_notation": null,
+    "inorganic_flag": 0,
+    "max_phase": "4.0",
+    "molecule_chembl_id": "CHEMBL2105741",
+    "molecule_hierarchy": {
+      "active_chembl_id": "CHEMBL2103875",
+      "molecule_chembl_id": "CHEMBL2105741",
+      "parent_chembl_id": "CHEMBL2103875"
+    },
+    "molecule_properties": {
+      "alogp": "3.94",
+      "aromatic_rings": 4,
+      "full_molformula": "C28H29FIN5O5S",
+      "full_mwt": "693.54",
+      "hba": 8,
+      "hbd": 2,
+      "heavy_atoms": 37,
+      "mw_freebase": "615.40",
+      "np_likeness_score": "-1.57",
+      "num_ro5_violations": 1,
+      "psa": "107.13",
+      "qed_weighted": "0.33",
+      "ro3_pass": "N",
+      "rtb": 5
+    },
+    "molecule_structures": {
+      "canonical_smiles": "CC(=O)Nc1cccc(-n2c(=O)n(C3CC3)c(=O)c3c(Nc4ccc(I)cc4F)n(C)c(=O)c(C)c32)c1.C[S+](C)[O-]",
+      "molfile": "\n     RDKit          2D\n\n 41 44  0  0  0  0  0  0  0  0999 V2000\n    0.1238   -0.1709    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7071    0.4125    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7071    1.2375    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2905   -0.1709    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -8.6920    1.3259    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -9.4065    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -9.4065    0.0884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -8.6920   -0.3241    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -7.9775    0.0884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -7.9775    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -7.2630    1.3259    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.5485    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.8340    1.3259    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.8340    2.1509    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.5485    2.5634    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -7.2630    2.1509    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.5485    0.0884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.8341   -0.3241    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.1196    0.0884    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.1196    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4051    1.3259    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.6906    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.6907    0.0884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9762   -0.3241    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2617    0.0884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.2617    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9762    1.3259    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.9762    2.1509    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5472   -0.3241    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0\n   -4.4051   -0.3241    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.8341   -1.1491    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -7.2630   -0.3241    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -5.1196    2.5634    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -7.9775    2.5634    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.5485    3.3884    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.1361    4.1029    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -6.9610    4.1029    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  -10.1209    1.3259    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n  -10.8354    0.9134    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  -11.5499    1.3259    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  -10.8354    0.0884    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  3  2  1  0\n  2  4  1  0\n  5  6  1  0\n  5 10  2  0\n  6  7  2  0\n  7  8  1  0\n  8  9  2  0\n  9 10  1  0\n 10 11  1  0\n 11 12  1  0\n 16 11  1  0\n 13 14  1  0\n 14 15  1  0\n 15 16  1  0\n 12 17  2  0\n 13 12  1  0\n 20 13  2  0\n 17 18  1  0\n 18 19  1  0\n 19 20  1  0\n 20 21  1  0\n 21 22  1  0\n 22 23  1  0\n 22 27  2  0\n 23 24  2  0\n 24 25  1  0\n 25 26  2  0\n 26 27  1  0\n 27 28  1  0\n 25 29  1  0\n 19 30  1  0\n 18 31  2  0\n 17 32  1  0\n 14 33  2  0\n 16 34  2  0\n 15 35  1  0\n 35 36  1  0\n 37 35  1  0\n 36 37  1  0\n  6 38  1  0\n 38 39  1  0\n 39 40  1  0\n 39 41  2  0\nM  CHG  2   2   1   3  -1\nM  END\n> <chembl_id>\nCHEMBL2105741\n\n> <chembl_pref_name>\nTRAMETINIB DIMETHYL SULFOXIDE",
+      "standard_inchi": "InChI=1S/C26H23FIN5O4.C2H6OS/c1-13-22-21(23(31(3)24(13)35)30-20-10-7-15(28)11-19(20)27)25(36)33(17-8-9-17)26(37)32(22)18-6-4-5-16(12-18)29-14(2)34;1-4(2)3/h4-7,10-12,17,30H,8-9H2,1-3H3,(H,29,34);1-2H3",
+      "standard_inchi_key": "OQUFJVRYDFIQBW-UHFFFAOYSA-N"
+    },
+    "molecule_synonyms": [
+      {
+        "molecule_synonym": "GSK-1120212B",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "GSK-1120212B"
+      },
+      {
+        "molecule_synonym": "GSK1120212B",
+        "syn_type": "RESEARCH_CODE",
+        "synonyms": "GSK1120212B"
+      },
+      {
+        "molecule_synonym": "Mekinist",
+        "syn_type": "TRADE_NAME",
+        "synonyms": "MEKINIST"
+      },
+      {
+        "molecule_synonym": "Spexotras",
+        "syn_type": "TRADE_NAME",
+        "synonyms": "SPEXOTRAS"
+      },
+      {
+        "molecule_synonym": "Trametinib dimethyl sulfoxide",
+        "syn_type": "EMA",
+        "synonyms": "TRAMETINIB DIMETHYL SULFOXIDE"
+      },
+      {
+        "molecule_synonym": "Trametinib dimethyl sulfoxide",
+        "syn_type": "FDA",
+        "synonyms": "TRAMETINIB DIMETHYL SULFOXIDE"
+      },
+      {
+        "molecule_synonym": "Trametinib dimethyl sulfoxide",
+        "syn_type": "MERCK_INDEX",
+        "synonyms": "TRAMETINIB DIMETHYL SULFOXIDE"
+      },
+      {
+        "molecule_synonym": "Trametinib dimethyl sulfoxide",
+        "syn_type": "OTHER",
+        "synonyms": "TRAMETINIB DIMETHYL SULFOXIDE"
+      },
+      {
+        "molecule_synonym": "Trametinib dimethyl sulfoxide",
+        "syn_type": "USAN",
+        "synonyms": "TRAMETINIB DIMETHYL SULFOXIDE"
+      }
+    ],
+    "molecule_type": "Small molecule",
+    "natural_product": 0,
+    "oral": true,
+    "orphan": 1,
+    "parenteral": false,
+    "polymer_flag": 0,
+    "pref_name": "TRAMETINIB DIMETHYL SULFOXIDE",
+    "prodrug": 0,
+    "score": 34.0,
+    "structure_type": "MOL",
+    "therapeutic_flag": true,
+    "topical": false,
+    "usan_stem": "-tinib",
+    "usan_stem_definition": "tyrosine kinase inhibitors: tyrosine kinase inhibitors; MEK (MAPK kinase) inhibitors",
+    "usan_substem": "-tinib (-metinib)",
+    "usan_year": 2011,
+    "veterinary": 0,
+    "withdrawn_flag": false
+  },
+  {
+    "atc_classifications": [],
+    "availability_type": -1,
+    "biotherapeutic": null,
+    "black_box_warning": 0,
+    "chemical_probe": 0,
+    "chirality": -1,
+    "cross_references": [],
+    "dosed_ingredient": false,
+    "first_approval": null,
+    "first_in_class": -1,
+    "helm_notation": null,
+    "inorganic_flag": -1,
+    "max_phase": null,
+    "molecule_chembl_id": "CHEMBL5433950",
+    "molecule_hierarchy": {
+      "active_chembl_id": "CHEMBL5433950",
+      "molecule_chembl_id": "CHEMBL5433950",
+      "parent_chembl_id": "CHEMBL5433950"
+    },
+    "molecule_properties": {
+      "alogp": "4.12",
+      "aromatic_rings": 2,
+      "full_molformula": "C26H25FIN5O4",
+      "full_mwt": "617.42",
+      "hba": 5,
+      "hbd": 2,
+      "heavy_atoms": 37,
+      "mw_freebase": "617.42",
+      "np_likeness_score": "-1.28",
+      "num_ro5_violations": 1,
+      "psa": "102.06",
+      "qed_weighted": "0.49",
+      "ro3_pass": "N",
+      "rtb": 5
+    },
+    "molecule_structures": {
+      "canonical_smiles": "CC(=O)Nc1cccc(N2C(=O)N(C3CC3)C(=O)C3=C(Nc4ccc(I)cc4F)N(C)C(=O)C(C)C32)c1",
+      "molfile": " \n     RDKit          2D\n\n 37 41  0  0  0  0  0  0  0  0999 V2000\n   -2.8565    2.8860    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.1419    3.2983    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4301    2.8864    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4301    2.0612    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.1402    1.6494    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.8565    2.0575    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -3.5712    3.2986    0.0000 I   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7154    3.2990    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7154    1.6486    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7154    0.8234    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0009    0.4106    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0017   -0.4120    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7165   -0.8248    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4283   -0.4155    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.4331    0.4089    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.1478    0.8217    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -2.1429   -0.8281    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7165   -1.6499    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7100    0.8196    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4222    0.4076    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4234   -0.4108    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7135   -0.8256    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7100    1.6447    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7135   -1.6507    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4280   -2.0636    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.4273   -2.8863    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7125   -3.2990    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.0005   -2.8898    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.0041   -2.0651    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.1419   -3.2989    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n    2.8565   -2.8863    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    3.5712   -3.2989    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.8565   -2.0611    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n    2.1370    0.8203    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.9636    0.8203    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.5503    1.5345    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.1380   -0.8234    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  2  1  2  0\n  3  2  1  0\n  4  3  2  0\n  5  4  1  0\n  1  6  1  0\n  6  5  2  0\n  1  7  1  0\n  3  8  1  0\n  4  9  1  0\n  9 10  1  0\n 11 10  2  0\n 12 11  1  0\n 13 12  1  0\n 14 13  1  0\n 15 14  1  0\n 10 15  1  0\n 15 16  1  0\n 14 17  2  0\n 13 18  1  0\n 11 19  1  0\n 20 19  1  0\n 21 20  1  0\n 22 21  1  0\n 12 22  1  0\n 19 23  2  0\n 22 24  1  0\n 25 24  2  0\n 26 25  1  0\n 27 26  2  0\n 28 27  1  0\n 29 28  2  0\n 24 29  1  0\n 26 30  1  0\n 30 31  1  0\n 31 32  1  0\n 31 33  2  0\n 34 20  1  0\n 34 35  1  0\n 34 36  1  0\n 35 36  1  0\n 21 37  2  0\nM  END\n> <chembl_id>\nCHEMBL5433950\n\n> <chembl_pref_name>\nNone",
+      "standard_inchi": "InChI=1S/C26H25FIN5O4/c1-13-22-21(23(31(3)24(13)35)30-20-10-7-15(28)11-19(20)27)25(36)33(17-8-9-17)26(37)32(22)18-6-4-5-16(12-18)29-14(2)34/h4-7,10-13,17,22,30H,8-9H2,1-3H3,(H,29,34)",
+      "standard_inchi_key": "AWVNKTFLGWUQLP-UHFFFAOYSA-N"
+    },
+    "molecule_synonyms": [],
+    "molecule_type": null,
+    "natural_product": 0,
+    "oral": false,
+    "orphan": -1,
+    "parenteral": false,
+    "polymer_flag": 0,
+    "pref_name": null,
+    "prodrug": -1,
+    "score": 33.0,
+    "structure_type": "MOL",
+    "therapeutic_flag": false,
+    "topical": false,
+    "usan_stem": null,
+    "usan_stem_definition": null,
+    "usan_substem": null,
+    "usan_year": null,
+    "veterinary": -1,
+    "withdrawn_flag": false
+  }
+]

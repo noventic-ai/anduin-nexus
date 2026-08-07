@@ -1,0 +1,21 @@
+[
+  {
+    "dbId": 5357769,
+    "displayName": "Caspase activation via extrinsic apoptotic signalling pathway",
+    "stId": "R-HSA-5357769",
+    "stIdVersion": "R-HSA-5357769.5",
+    "isInDisease": false,
+    "isInferred": false,
+    "maxDepth": 4,
+    "name": [
+      "Caspase activation via extrinsic apoptotic signalling pathway"
+    ],
+    "releaseDate": "2015-03-19",
+    "speciesName": "Homo sapiens",
+    "hasDiagram": true,
+    "hasEHLD": true,
+    "lastUpdatedDate": "2018-06-13",
+    "schemaClass": "Pathway",
+    "className": "Pathway"
+  }
+]

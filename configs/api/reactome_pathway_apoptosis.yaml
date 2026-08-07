@@ -1,0 +1,10 @@
+adapter:
+  name: reactome
+  operation: get_json
+
+params:
+  path: data/pathways/low/diagram/entity/R-HSA-109581
+
+output:
+  pretty: true
+  path: assets/reactome_hs_apoptosis_query.json

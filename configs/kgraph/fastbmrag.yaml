@@ -1,0 +1,26 @@
+run:
+  job: query  # query | update
+
+kgraph:
+  working_dir: outputs/kgraph/fastbmrag
+  collection_name: pubmed
+  llm_update_model_name: gpt-4.1-mini
+  llm_query_model_name: gpt-4.1-mini
+  embed_model_name: text-embedding-3-small
+  embed_size: 1536
+  embedding_similarity: 0.8
+  backend: openai
+
+update:
+  document: ""  # Required when run.job=update unless passed via --document
+
+query:
+  question: Which genes are associated with endometriosis?
+  top_match: 20
+  similarity_score: 0.8
+  temperature: 0.75
+  question_analysis: true
+  filter_importance: -1.0
+  gene: []
+  disease: []
+  paper_id: []
