@@ -1,0 +1,20 @@
+source_parquet:
+  dir: /media/cwseitz/HDD2/DB/open-targets/association_by_datasource_direct
+  file_glob: part-*.parquet
+  max_files: 2
+  row_limit: 100000
+  min_score: 0.0
+  batch_size: 1000
+  dry_run: true
+  sample_size: 5
+
+nexus_connection:
+  uri: http://localhost:7474
+  database: neo4j
+  user: neo4j
+  require_auth: true
+  password_env: NEO4J_PASSWORD
+
+output:
+  pretty: true
+  path: queries/open_targets_to_nexus_summary.json

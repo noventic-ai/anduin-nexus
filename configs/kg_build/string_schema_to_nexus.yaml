@@ -1,0 +1,20 @@
+source_string:
+  sql_files:
+    - /media/cwseitz/HDD2/DB/string/evidence_schema.v12.0.sql
+    - /media/cwseitz/HDD2/DB/string/items_schema.v12.0.sql
+    - /media/cwseitz/HDD2/DB/string/network_schema.v12.0.sql.gz
+  table_limit: 200
+  batch_size: 1000
+  dry_run: true
+  sample_size: 5
+
+nexus_connection:
+  uri: http://localhost:7474
+  database: neo4j
+  user: neo4j
+  require_auth: true
+  password_env: NEO4J_PASSWORD
+
+output:
+  pretty: true
+  path: queries/string_schema_to_nexus_summary.json

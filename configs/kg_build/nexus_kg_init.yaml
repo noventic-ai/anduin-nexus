@@ -1,0 +1,15 @@
+connection:
+  uri: http://localhost:7474
+  database: neo4j
+  user: neo4j
+  require_auth: true
+  password_env: NEO4J_PASSWORD
+
+graph:
+  name: nexus_kg
+  biolink_schema: https://w3id.org/biolink/biolink-model.yaml
+  create_constraints: true
+
+output:
+  pretty: true
+  path: ""

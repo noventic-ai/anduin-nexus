@@ -1,0 +1,28 @@
+version: 1
+
+namespaces:
+  compound:
+    canonical_prefix: CHEMBL.COMPOUND
+
+  target:
+    canonical_prefix: CHEMBL.TARGET
+
+  disease:
+    canonical_prefix: MONDO
+    fallback_prefixes:
+      - MESH
+      - EFO
+
+  phenotype:
+    canonical_prefix: HP
+    recognized_prefixes:
+      - HP
+
+  gene:
+    canonical_prefix: NCBIGene
+
+  protein:
+    canonical_prefix: UniProtKB
+
+  pathway:
+    canonical_prefix: Reactome

@@ -9,9 +9,9 @@ from datetime import datetime
 from scipy.spatial.distance import cosine
 from tqdm import tqdm
 
-from kgraph.prompt import system_prompt_abstract, system_prompt_main_text, system_prompt_query, system_prompt_gene, system_prompt_disease, system_prompt_process_query, system_prompt_query2
-from kgraph.utils import chunking_by_word_size, safe_unicode_decode, locate_json_string_body_from_string, standarized_llm_df, chat_llm, embed_llm
-from kgraph.utils import convert_response_to_json, remove_thinking
+from rag.prompt import system_prompt_abstract, system_prompt_main_text, system_prompt_query, system_prompt_gene, system_prompt_disease, system_prompt_process_query, system_prompt_query2
+from rag.utils import chunking_by_word_size, safe_unicode_decode, locate_json_string_body_from_string, standarized_llm_df, chat_llm, embed_llm
+from rag.utils import convert_response_to_json, remove_thinking
 
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Union
@@ -857,7 +857,7 @@ class RAG:
 
 
 if __name__ == '__main__':
-    import kgraph.fastbmrag as fastbmrag
+    import rag.fastbmrag as fastbmrag
     import argparse
     parser = argparse.ArgumentParser(description="FastBioMedRAG is relationship-based Retrieval-Augmented Generation tool for deep analysis of biological papers.")
     parser.add_argument('--job', type=str, required=True, help="'either update' or 'query': to add new document or query", default='update')

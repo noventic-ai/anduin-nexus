@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import re
 import ssl
 import subprocess
 import time
@@ -195,6 +196,352 @@ class GenericRESTAdapter(AdapterBase):
     ) -> Any:
         url = f"{self.base_url}/{path.lstrip('/')}" if path else self.base_url
         return self._client.post_json(url, data=data, headers=headers)
+
+
+class ReactomeAdapter(AdapterBase):
+    """Drug-centric Reactome adapter built on ContentService."""
+
+    source_name = "reactome"
+    description = "Reactome ContentService (drug-centric helpers)"
+
+    def __init__(self) -> None:
+        self._client = HTTPJSONClient()
+        self._base_url = "https://reactome.org/ContentService"
+
+    def operations(self) -> dict[str, Callable[..., Any]]:
+        return {
+            "describe": self.describe,
+            "get_json": self.get_json,
+            "search_entities": self.search_entities,
+            "drug_profile": self.drug_profile,
+            "pathway_graph": self.pathway_graph,
+        }
+
+    def describe(self) -> dict[str, Any]:
+        return {
+            "source": self.source_name,
+            "description": self.description,
+            "base_url": self._base_url,
+            "operations": sorted(self.operations().keys()),
+        }
+
+    def get_json(
+        self,
+        path: str = "",
+        params: dict[str, str] | None = None,
+        headers: dict[str, str] | None = None,
+    ) -> Any:
+        url = f"{self._base_url}/{path.lstrip('/')}" if path else self._base_url
+        return self._client.get_json(url, params=params, headers=headers)
+
+    def search_entities(
+        self,
+        query: str,
+        species: str | None = None,
+        limit: int = 25,
+    ) -> list[dict[str, Any]]:
+        if not str(query).strip():
+            raise ValueError("query is required")
+        if limit < 1:
+            raise ValueError("limit must be >= 1")
+
+        payload = self.get_json(path="search/query", params={"query": str(query).strip()})
+        entries = self._flatten_search_entries(payload)
+        if species:
+            entries = [entry for entry in entries if self._entry_has_species(entry, species)]
+        return entries[:limit]
+
+    def drug_profile(
+        self,
+        drug_name: str,
+        species: str = "Homo sapiens",
+        pathway_limit: int = 25,
+        reaction_limit: int = 25,
+    ) -> dict[str, Any]:
+        if not str(drug_name).strip():
+            raise ValueError("drug_name is required")
+        if pathway_limit < 1:
+            raise ValueError("pathway_limit must be >= 1")
+        if reaction_limit < 1:
+            raise ValueError("reaction_limit must be >= 1")
+
+        query = str(drug_name).strip()
+        payload = self.get_json(path="search/query", params={"query": query})
+        entries = self._flatten_search_entries(payload)
+        drug_entries = [entry for entry in entries if self._is_drug_entry(entry)]
+        if species:
+            drug_entries = [entry for entry in drug_entries if self._entry_has_species(entry, species)] or drug_entries
+
+        selected = self._pick_best_drug_entry(drug_entries, query)
+        if selected is None:
+            return {
+                "query": {"drug_name": query, "species": species},
+                "match_count": len(drug_entries),
+                "selected_drug": None,
+                "diseases": [],
+                "pathways": [],
+                "related_reactions": [],
+            }
+
+        st_id = str(selected.get("stId") or "").strip()
+        detail = self.get_json(path=f"data/query/{st_id}") if st_id else {}
+        pathways_raw = self.get_json(path=f"data/pathways/low/entity/{st_id}") if st_id else []
+
+        pathways = self._normalize_pathways(pathways_raw, species=species, limit=pathway_limit)
+        reactions = self._related_reactions(entries, species=species, limit=reaction_limit)
+
+        disease_names: list[str] = []
+        if isinstance(detail, dict):
+            disease_items = detail.get("disease", [])
+            if isinstance(disease_items, list):
+                for item in disease_items:
+                    if not isinstance(item, dict):
+                        continue
+                    name = str(item.get("displayName") or "").strip()
+                    if name:
+                        disease_names.append(name)
+
+        reference_entity = detail.get("referenceEntity", {}) if isinstance(detail, dict) else {}
+        approvals = reference_entity.get("approvalSource", []) if isinstance(reference_entity, dict) else []
+        if not isinstance(approvals, list):
+            approvals = []
+
+        return {
+            "query": {"drug_name": query, "species": species},
+            "match_count": len(drug_entries),
+            "selected_drug": {
+                "stId": selected.get("stId"),
+                "dbId": selected.get("dbId"),
+                "name": self._strip_html(str(selected.get("name") or "")),
+                "reference_name": self._strip_html(str(selected.get("referenceName") or "")),
+                "reference_identifier": selected.get("referenceIdentifier"),
+                "database_name": selected.get("databaseName"),
+                "reference_url": selected.get("referenceURL"),
+                "is_disease": bool(selected.get("isDisease") or selected.get("disease")),
+            },
+            "diseases": disease_names,
+            "approvals": [str(value) for value in approvals if str(value).strip()],
+            "pathway_count": len(pathways),
+            "pathways": pathways,
+            "related_reaction_count": len(reactions),
+            "related_reactions": reactions,
+        }
+
+    def pathway_graph(
+        self,
+        pathway_st_id: str,
+        include_participants: bool = True,
+        include_events: bool = True,
+    ) -> dict[str, Any]:
+        if not str(pathway_st_id).strip():
+            raise ValueError("pathway_st_id is required")
+
+        st_id = str(pathway_st_id).strip()
+        detail = self.get_json(path=f"data/query/{st_id}")
+        events_payload = self.get_json(path=f"data/pathway/{st_id}/containedEvents") if include_events else []
+        participants_payload = self.get_json(path=f"data/participants/{st_id}") if include_participants else []
+
+        nodes, edges = self._build_pathway_graph(detail, events_payload)
+
+        return {
+            "pathway_st_id": st_id,
+            "summary": {
+                "node_count": len(nodes),
+                "edge_count": len(edges),
+                "participant_count": len(participants_payload) if isinstance(participants_payload, list) else 0,
+            },
+            "nodes": nodes,
+            "edges": edges,
+            "pathway": detail,
+            "contained_events": events_payload,
+            "participants": participants_payload,
+        }
+
+    def _build_pathway_graph(self, pathway_detail: Any, events_payload: Any) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+        nodes: dict[str, dict[str, Any]] = {}
+        edges: set[tuple[str, str, str]] = set()
+        db_id_to_node_id: dict[str, str] = {}
+
+        def node_id_for(entity: dict[str, Any]) -> str | None:
+            st_id = str(entity.get("stId") or "").strip()
+            if st_id:
+                return st_id
+            db_id = entity.get("dbId")
+            if db_id is None:
+                return None
+            db_key = str(db_id)
+            if db_key in db_id_to_node_id:
+                return db_id_to_node_id[db_key]
+            return f"db:{db_id}"
+
+        def add_node(entity: dict[str, Any], node_role: str) -> str | None:
+            identifier = node_id_for(entity)
+            if not identifier:
+                return None
+
+            if identifier not in nodes:
+                nodes[identifier] = {
+                    "id": identifier,
+                    "stId": entity.get("stId"),
+                    "dbId": entity.get("dbId"),
+                    "displayName": entity.get("displayName"),
+                    "schemaClass": entity.get("schemaClass"),
+                    "speciesName": entity.get("speciesName"),
+                    "role": node_role,
+                }
+
+            db_id = entity.get("dbId")
+            st_id = str(entity.get("stId") or "").strip()
+            if db_id is not None and st_id:
+                db_id_to_node_id[str(db_id)] = st_id
+            return identifier
+
+        if isinstance(pathway_detail, dict):
+            add_node(pathway_detail, "pathway")
+
+        def walk_entity(entity: Any) -> None:
+            if not isinstance(entity, dict):
+                return
+
+            current_id = add_node(entity, "event")
+
+            event_of = entity.get("eventOf", [])
+            if isinstance(event_of, list):
+                for parent in event_of:
+                    parent_entity = parent if isinstance(parent, dict) else {"dbId": parent}
+                    parent_id = add_node(parent_entity, "pathway")
+                    if current_id and parent_id:
+                        edges.add((parent_id, current_id, "contains_event"))
+                    walk_entity(parent_entity)
+
+            has_event = entity.get("hasEvent", [])
+            if isinstance(has_event, list):
+                for nested in has_event:
+                    nested_entity = nested if isinstance(nested, dict) else {"dbId": nested}
+                    nested_id = add_node(nested_entity, "event")
+                    if current_id and nested_id and nested_id != current_id:
+                        edges.add((current_id, nested_id, "contains_event"))
+                    walk_entity(nested_entity)
+
+        if isinstance(events_payload, list):
+            for item in events_payload:
+                walk_entity(item)
+
+        graph_edges = [
+            {"source": source, "target": target, "type": edge_type}
+            for source, target, edge_type in sorted(edges)
+        ]
+        graph_nodes = list(nodes.values())
+        return graph_nodes, graph_edges
+
+    @staticmethod
+    def _strip_html(text: str) -> str:
+        return re.sub(r"<[^>]+>", "", text).strip()
+
+    def _flatten_search_entries(self, payload: Any) -> list[dict[str, Any]]:
+        if not isinstance(payload, dict):
+            return []
+        groups = payload.get("results", [])
+        if not isinstance(groups, list):
+            return []
+
+        flattened: list[dict[str, Any]] = []
+        for group in groups:
+            if not isinstance(group, dict):
+                continue
+            group_type = str(group.get("typeName") or "").strip()
+            entries = group.get("entries", [])
+            if not isinstance(entries, list):
+                continue
+            for entry in entries:
+                if not isinstance(entry, dict):
+                    continue
+                normalized = dict(entry)
+                if group_type and "type" not in normalized:
+                    normalized["type"] = group_type
+                flattened.append(normalized)
+        return flattened
+
+    @staticmethod
+    def _entry_has_species(entry: dict[str, Any], species: str) -> bool:
+        target = species.strip().lower()
+        species_values = entry.get("species", [])
+        if not isinstance(species_values, list):
+            return False
+        for value in species_values:
+            if str(value).strip().lower() == target:
+                return True
+        return False
+
+    @staticmethod
+    def _is_drug_entry(entry: dict[str, Any]) -> bool:
+        entry_type = str(entry.get("type") or "").strip().lower()
+        exact_type = str(entry.get("exactType") or "").strip().lower()
+        return (
+            "drug" in entry_type
+            or "therapeutic" in exact_type
+            or "chemicaldrug" in exact_type
+            or "referencetherapeutic" in exact_type
+        )
+
+    def _pick_best_drug_entry(self, entries: list[dict[str, Any]], query: str) -> dict[str, Any] | None:
+        if not entries:
+            return None
+        normalized_query = query.strip().lower()
+
+        for entry in entries:
+            reference_name = self._strip_html(str(entry.get("referenceName") or "")).lower()
+            if reference_name == normalized_query:
+                return entry
+        for entry in entries:
+            name = self._strip_html(str(entry.get("name") or "")).lower()
+            if name == normalized_query:
+                return entry
+        return entries[0]
+
+    def _normalize_pathways(self, payload: Any, species: str, limit: int) -> list[dict[str, Any]]:
+        if not isinstance(payload, list):
+            return []
+
+        out: list[dict[str, Any]] = []
+        for item in payload:
+            if not isinstance(item, dict):
+                continue
+            species_name = str(item.get("speciesName") or "").strip()
+            if species and species_name and species_name.lower() != species.strip().lower():
+                continue
+            out.append(
+                {
+                    "stId": item.get("stId"),
+                    "displayName": item.get("displayName"),
+                    "speciesName": species_name,
+                    "isInDisease": bool(item.get("isInDisease")),
+                    "isInferred": bool(item.get("isInferred")),
+                }
+            )
+            if len(out) >= limit:
+                break
+        return out
+
+    def _related_reactions(self, entries: list[dict[str, Any]], species: str, limit: int) -> list[dict[str, Any]]:
+        out: list[dict[str, Any]] = []
+        for entry in entries:
+            entry_type = str(entry.get("type") or "").strip().lower()
+            if entry_type != "reaction":
+                continue
+            if species and not self._entry_has_species(entry, species):
+                continue
+            out.append(
+                {
+                    "stId": entry.get("stId"),
+                    "name": self._strip_html(str(entry.get("name") or "")),
+                    "species": entry.get("species", []),
+                    "summation": self._strip_html(str(entry.get("summation") or "")),
+                }
+            )
+            if len(out) >= limit:
+                break
+        return out
 
 
 class LincsDCICAdapter(AdapterBase):
@@ -550,12 +897,111 @@ class ChEMBLAdapter(AdapterBase):
         self._client = HTTPJSONClient()
 
     def operations(self) -> dict[str, Callable[..., Any]]:
-        return {"search_molecules": self.search_molecules}
+        return {
+            "search_molecules": self.search_molecules,
+            "drug_indications": self.drug_indications,
+            "mechanisms_of_action": self.mechanisms_of_action,
+            "molecule_activities": self.molecule_activities,
+            "similar_compounds": self.similar_compounds,
+        }
 
     def search_molecules(self, query: str, limit: int = 20) -> list[dict[str, Any]]:
         payload = self._client.get_json(
             "https://www.ebi.ac.uk/chembl/api/data/molecule/search",
             params={"q": query, "limit": str(limit), "format": "json"},
+        )
+        if not isinstance(payload, dict):
+            return []
+        molecules = payload.get("molecules", [])
+        return molecules if isinstance(molecules, list) else []
+
+    def drug_indications(self, molecule_chembl_id: str, max_phase_for_ind: int | None = None) -> list[dict[str, Any]]:
+        if not str(molecule_chembl_id).strip():
+            raise ValueError("molecule_chembl_id is required")
+
+        params: dict[str, str] = {
+            "molecule_chembl_id": str(molecule_chembl_id).strip(),
+            "format": "json",
+        }
+        if max_phase_for_ind is not None:
+            params["max_phase_for_ind"] = str(int(max_phase_for_ind))
+
+        payload = self._client.get_json("https://www.ebi.ac.uk/chembl/api/data/drug_indication", params=params)
+        if not isinstance(payload, dict):
+            return []
+        indications = payload.get("drug_indications", [])
+        return indications if isinstance(indications, list) else []
+
+    def mechanisms_of_action(self, molecule_chembl_id: str) -> list[dict[str, Any]]:
+        if not str(molecule_chembl_id).strip():
+            raise ValueError("molecule_chembl_id is required")
+
+        payload = self._client.get_json(
+            "https://www.ebi.ac.uk/chembl/api/data/mechanism",
+            params={"molecule_chembl_id": str(molecule_chembl_id).strip(), "format": "json"},
+        )
+        if not isinstance(payload, dict):
+            return []
+        mechanisms = payload.get("mechanisms", [])
+        return mechanisms if isinstance(mechanisms, list) else []
+
+    def molecule_activities(
+        self,
+        molecule_chembl_id: str,
+        limit: int = 100,
+        pchembl_value_only: bool = False,
+    ) -> list[dict[str, Any]]:
+        if not str(molecule_chembl_id).strip():
+            raise ValueError("molecule_chembl_id is required")
+        if limit < 1:
+            raise ValueError("limit must be >= 1")
+
+        params: dict[str, str] = {
+            "molecule_chembl_id": str(molecule_chembl_id).strip(),
+            "limit": str(limit),
+            "format": "json",
+        }
+        if pchembl_value_only:
+            params["pchembl_value__isnull"] = "false"
+
+        payload = self._client.get_json("https://www.ebi.ac.uk/chembl/api/data/activity", params=params)
+        if not isinstance(payload, dict):
+            return []
+        activities = payload.get("activities", [])
+        return activities if isinstance(activities, list) else []
+
+    def similar_compounds(
+        self,
+        molecule_chembl_id: str | None = None,
+        smiles: str | None = None,
+        similarity: int = 85,
+        limit: int = 20,
+    ) -> list[dict[str, Any]]:
+        if limit < 1:
+            raise ValueError("limit must be >= 1")
+        if similarity < 40 or similarity > 100:
+            raise ValueError("similarity must be between 40 and 100")
+
+        query_smiles = str(smiles or "").strip()
+        if not query_smiles:
+            chembl_id = str(molecule_chembl_id or "").strip()
+            if not chembl_id:
+                raise ValueError("Provide molecule_chembl_id or smiles")
+            molecule = self._client.get_json(
+                f"https://www.ebi.ac.uk/chembl/api/data/molecule/{quote(chembl_id, safe='')}.json"
+            )
+            if not isinstance(molecule, dict):
+                return []
+            structures = molecule.get("molecule_structures", {})
+            if not isinstance(structures, dict):
+                return []
+            query_smiles = str(structures.get("canonical_smiles", "")).strip()
+            if not query_smiles:
+                return []
+
+        payload = self._client.get_json(
+            f"https://www.ebi.ac.uk/chembl/api/data/similarity/{quote(query_smiles, safe='')}/{int(similarity)}.json",
+            params={"limit": str(limit)},
         )
         if not isinstance(payload, dict):
             return []
@@ -697,6 +1143,7 @@ class AnduinAPIClient:
             "pubchem": PubChemAdapter(),
             "uniprot": UniProtAdapter(),
             "opentargets": OpenTargetsAdapter(),
+            "reactome": ReactomeAdapter(),
         }
         self._register_reference_catalog_adapters()
 

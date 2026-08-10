@@ -3,11 +3,17 @@ from __future__ import annotations
 import argparse
 from ast import literal_eval
 from pprint import pprint
+import sys
+from pathlib import Path
 
 import pandas as pd
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 from common.config import load_yaml_config
-from kgraph.fastbmrag import RAG
+from rag.fastbmrag import RAG
 
 
 def _load_update_dataframe(path: str) -> pd.DataFrame:
@@ -22,22 +28,26 @@ def _load_update_dataframe(path: str) -> pd.DataFrame:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run FastBioMedRAG update/query jobs.")
-    parser.add_argument("--config", type=str, default="configs/kgraph/fastbmrag.yaml", help="Path to YAML config.")
+    parser.add_argument("--config", type=str, default="configs/rag/fastbmrag.yaml", help="Path to YAML config.")
     parser.add_argument("--job", type=str, choices=["update", "query"], default=None, help="Optional override for run.job.")
     parser.add_argument("--document", type=str, default=None, help="CSV path for update job override.")
     parser.add_argument("--question", type=str, default=None, help="Query text override for query job.")
     args = parser.parse_args()
 
-    config = load_yaml_config(args.config)
+    config_path = Path(args.config)
+    if not config_path.is_absolute():
+        config_path = PROJECT_ROOT / config_path
+
+    config = load_yaml_config(config_path)
     run_cfg = config.get("run", {}) if isinstance(config, dict) else {}
-    kgraph_cfg = config.get("kgraph", {}) if isinstance(config, dict) else {}
+    rag_cfg = config.get("rag", {}) if isinstance(config, dict) else {}
     update_cfg = config.get("update", {}) if isinstance(config, dict) else {}
     query_cfg = config.get("query", {}) if isinstance(config, dict) else {}
 
     if not isinstance(run_cfg, dict):
         run_cfg = {}
-    if not isinstance(kgraph_cfg, dict):
-        kgraph_cfg = {}
+    if not isinstance(rag_cfg, dict):
+        rag_cfg = {}
     if not isinstance(update_cfg, dict):
         update_cfg = {}
     if not isinstance(query_cfg, dict):
@@ -48,14 +58,14 @@ def main() -> None:
         raise ValueError("run.job must be either 'update' or 'query'.")
 
     rag = RAG(
-        working_dir=str(kgraph_cfg.get("working_dir", "./outputs/kgraph/fastbmrag")),
-        collection_name=str(kgraph_cfg.get("collection_name", "paper")),
-        llm_index_model_name=str(kgraph_cfg.get("llm_update_model_name", "gpt-4.1-mini")),
-        llm_query_model_name=str(kgraph_cfg.get("llm_query_model_name", "gpt-4.1-mini")),
-        embed_model_name=str(kgraph_cfg.get("embed_model_name", "text-embedding-3-small")),
-        embed_size=int(kgraph_cfg.get("embed_size", 1536)),
-        embedding_similarity=float(kgraph_cfg.get("embedding_similarity", 0.8)),
-        backend=str(kgraph_cfg.get("backend", "openai")),
+        working_dir=str(rag_cfg.get("working_dir", "./outputs/rag/fastbmrag")),
+        collection_name=str(rag_cfg.get("collection_name", "paper")),
+        llm_index_model_name=str(rag_cfg.get("llm_update_model_name", "gpt-4.1-mini")),
+        llm_query_model_name=str(rag_cfg.get("llm_query_model_name", "gpt-4.1-mini")),
+        embed_model_name=str(rag_cfg.get("embed_model_name", "text-embedding-3-small")),
+        embed_size=int(rag_cfg.get("embed_size", 1536)),
+        embedding_similarity=float(rag_cfg.get("embedding_similarity", 0.8)),
+        backend=str(rag_cfg.get("backend", "openai")),
     )
 
     try:
@@ -73,7 +83,7 @@ def main() -> None:
         temperature = float(query_cfg.get("temperature", 0.75))
         question_analysis = bool(query_cfg.get("question_analysis", True))
         filter_importance = float(query_cfg.get("filter_importance", -1.0))
-        similarity_score = float(query_cfg.get("similarity_score", float(kgraph_cfg.get("embedding_similarity", 0.8))))
+        similarity_score = float(query_cfg.get("similarity_score", float(rag_cfg.get("embedding_similarity", 0.8))))
 
         gene = query_cfg.get("gene", [])
         disease = query_cfg.get("disease", [])

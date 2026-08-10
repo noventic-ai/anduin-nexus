@@ -1,8 +1,8 @@
 run:
   job: query  # query | update
 
-kgraph:
-  working_dir: outputs/kgraph/fastbmrag
+rag:
+  working_dir: outputs/rag/fastbmrag
   collection_name: pubmed
   llm_update_model_name: gpt-4.1-mini
   llm_query_model_name: gpt-4.1-mini

@@ -1,0 +1,58 @@
+source_connection:
+  uri: http://localhost:7474
+  database: neo4j
+  user: neo4j
+  require_auth: true
+  password_env: NEO4J_PASSWORD
+
+nexus_connection:
+  uri: http://localhost:7474
+  database: neo4j
+  user: neo4j
+  require_auth: true
+  password_env: NEO4J_PASSWORD
+
+import:
+  source_name: reactome_graph
+  default_prefix: REACT
+  batch_size: 1000
+  node_limit: 2000
+  edge_limit: 5000
+  node_offset: 0
+  edge_offset: 0
+  dry_run: true
+  sample_size: 5
+
+mapping:
+  default_node_category: biolink:NamedThing
+  default_predicate: biolink:related_to
+  default_association: biolink:Association
+
+  node_category_map:
+    Pathway: biolink:Pathway
+    Reaction: biolink:MolecularActivity
+    Polymerisation: biolink:MolecularActivity
+    Depolymerisation: biolink:MolecularActivity
+    ChemicalDrug: biolink:ChemicalEntity
+    Drug: biolink:ChemicalEntity
+    SmallMolecule: biolink:ChemicalEntity
+    GenomeEncodedEntity: biolink:Gene
+    Protein: biolink:Protein
+    EntityWithAccessionedSequence: biolink:Protein
+    Disease: biolink:Disease
+    Compartment: biolink:CellularComponent
+
+  predicate_map:
+    hasMember: biolink:has_part
+    hasComponent: biolink:has_part
+    inferredTo: biolink:related_to
+    disease: biolink:related_to
+    compartment: biolink:located_in
+    referenceEntity: biolink:same_as
+    input: biolink:has_input
+    output: biolink:has_output
+    catalystActivity: biolink:enables
+
+output:
+  pretty: true
+  path: queries/reactome_graph_to_nexus_summary.json
